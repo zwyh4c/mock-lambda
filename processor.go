@@ -21,7 +21,7 @@ type Payload struct {
 
 type MockLambda struct {
 	api     func(h func(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error)) Response
-	apiV2   func(h func(ctx context.Context, request events.APIGatewayV2HTTPRequest) (events.APIGatewayV2HTTPResponse, error)) Response
+	apiV2   func(h func(ctx context.Context, request events.APIGatewayV2HTTPRequest) (events.APIGatewayV2CustomAuthorizerSimpleResponse, error)) Response
 	token   func(h func(request events.APIGatewayCustomAuthorizerRequest) (events.APIGatewayCustomAuthorizerResponse, error)) Response
 	request func(h func(request events.APIGatewayCustomAuthorizerRequestTypeRequest) (events.APIGatewayCustomAuthorizerResponse, error)) Response
 	sqs     func(h func(ctx context.Context, request events.SQSEvent) error) Response
@@ -41,7 +41,7 @@ func (ml *MockLambda) start(h interface{}) Response {
 	if inputCount == 2 && inputTypes[0] == "context.Context" && inputTypes[1] == "events.APIGatewayProxyRequest" {
 		response = ml.api(h.(func(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error)))
 	} else if inputCount == 2 && inputTypes[0] == "context.Context" && inputTypes[1] == "events.APIGatewayV2HTTPRequest" {
-		response = ml.apiV2(h.(func(ctx context.Context, request events.APIGatewayV2HTTPRequest) (events.APIGatewayV2HTTPResponse, error)))
+		response = ml.apiV2(h.(func(ctx context.Context, request events.APIGatewayV2HTTPRequest) (events.APIGatewayV2CustomAuthorizerSimpleResponse, error)))
 	} else if inputCount == 1 && inputTypes[0] == "events.APIGatewayCustomAuthorizerRequest" {
 		response = ml.token(h.(func(request events.APIGatewayCustomAuthorizerRequest) (events.APIGatewayCustomAuthorizerResponse, error)))
 	} else if inputCount == 1 && inputTypes[0] == "events.APIGatewayCustomAuthorizerRequestTypeRequest" {
