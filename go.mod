@@ -1,4 +1,4 @@
-module github.com/icarus-sullivan/mock-lambda
+module github.com/zwyh4c/mock-lambda
 
 go 1.17
 
