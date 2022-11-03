@@ -42,7 +42,7 @@ func api(h func(ctx context.Context, request events.APIGatewayProxyRequest) (eve
 	return response
 }
 
-func apiV2(h func(ctx context.Context, request events.APIGatewayV2HTTPRequest) (events.APIGatewayV2HTTPResponse, error)) Response {
+func apiV2(h func(ctx context.Context, request events.APIGatewayV2HTTPRequest) (events.APIGatewayV2CustomAuthorizerSimpleResponse, error)) Response {
 	response := Response{
 		Payload: Payload{},
 	}
